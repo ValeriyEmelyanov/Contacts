@@ -48,7 +48,7 @@ public class Contact {
 
     private boolean isNumberValid(String number) {
         if (number == null || !number.matches("\\+?" +
-                "(([\\da-zA-Z]{1,}([ -]\\([\\da-zA-Z]{2,}\\))?)|(\\([\\da-zA-Z]{1,}\\)([ -][\\da-zA-Z]{2,})?))" +
+                "(\\([\\da-zA-Z]{1,}\\)|[\\da-zA-Z]{1,}([ -]\\([\\da-zA-Z]{2,}+\\))?)" +
                 "([ -][\\da-zA-Z]{2,})*")) {
             consoleHelper.showMessage("Wrong number format!");
             return false;
