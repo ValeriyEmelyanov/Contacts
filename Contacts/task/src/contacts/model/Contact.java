@@ -2,36 +2,20 @@ package contacts.model;
 
 import contacts.view.ConsoleHelper;
 
-public class Contact {
-    private String name;
-    private String surname;
-    private String number = "";
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-    ConsoleHelper consoleHelper = ConsoleHelper.getInstance();
+public abstract class Contact {
+    protected String number = "";
+    private final LocalDateTime created;
+    protected LocalDateTime lastEdit;
+    protected boolean isPerson;
+
+    protected final ConsoleHelper consoleHelper = ConsoleHelper.getInstance();
 
     public Contact() {
-    }
-
-    public Contact(String name, String surname, String number) {
-        this.name = name;
-        this.surname = surname;
-        setNumber(number);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
+        created = LocalDateTime.now();
+        lastEdit = created;
     }
 
     public String getNumber() {
@@ -39,14 +23,15 @@ public class Contact {
     }
 
     public void setNumber(String number) {
-        this.number = isNumberValid(number) ? number : "";
+        this.number = validNumber(number, consoleHelper);
+        lastEdit = LocalDateTime.now();
     }
 
     public boolean hasNumber() {
         return number != null && !number.isEmpty();
     }
 
-    private boolean isNumberValid(String number) {
+    private static boolean isNumberValid(String number, ConsoleHelper consoleHelper) {
         if (number == null || !number.matches("\\+?" +
                 "(\\([\\da-zA-Z]{1,}\\)|[\\da-zA-Z]{1,}([ -]\\([\\da-zA-Z]{2,}+\\))?)" +
                 "([ -][\\da-zA-Z]{2,})*")) {
@@ -56,11 +41,26 @@ public class Contact {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return String.format("%s %s, %s",
-                name,
-                surname,
-                hasNumber() ? number : "[no number]");
+    protected static String validNumber(String number, ConsoleHelper consoleHelper) {
+        return isNumberValid(number, consoleHelper) ? number : "";
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public LocalDateTime getLastEdit() {
+        return lastEdit;
+    }
+
+    public String info() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        return String.format(
+                "Number: %s\n" +
+                "Time created: %s\n" +
+                "Time last edit: %s",
+                hasNumber() ? number : "[no number]",
+                formatter.format(created),
+                formatter.format(lastEdit));
     }
 }

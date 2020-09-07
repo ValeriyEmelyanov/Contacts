@@ -23,8 +23,8 @@ public class Controller {
                 case "count":
                     phoneBook.count();
                     break;
-                case "list":
-                    phoneBook.list();
+                case "info":
+                    phoneBook.info();
                     break;
                 case "exit":
                     consoleHelper.close();

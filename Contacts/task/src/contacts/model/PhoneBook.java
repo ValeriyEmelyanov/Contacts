@@ -11,11 +11,31 @@ public class PhoneBook {
     ConsoleHelper consoleHelper = ConsoleHelper.getInstance();
 
     public void add() {
-        String name = consoleHelper.readName();
-        String surname = consoleHelper.readSurname();
-        String number = consoleHelper.readNumber();
-        contacts.add(new Contact(name, surname, number));
-        consoleHelper.showMessage("The record added.");
+        String type = consoleHelper.readContactType();
+        Contact contact = null;
+        switch (type) {
+            case "person":
+                contact = PersonContact.builder()
+                        .setName(consoleHelper.readName())
+                        .setSurname(consoleHelper.readSurname())
+                        .setBirthDate(consoleHelper.readBirthDate())
+                        .setGender(consoleHelper.readGender())
+                        .setNumber(consoleHelper.readNumber())
+                        .build();
+                break;
+            case "organization":
+                contact = OrganizationContact.builder()
+                        .setName(consoleHelper.readOrganizationName())
+                        .setAddress(consoleHelper.readAddress())
+                        .setNumber(consoleHelper.readNumber())
+                        .build();
+                break;
+            default:
+                consoleHelper.showMessage("Invalid input!");
+                return;
+        }
+        contacts.add(contact);
+        consoleHelper.showMessage("The record added.\n");
     }
 
     public void remove() {
@@ -39,13 +59,27 @@ public class PhoneBook {
         int record = consoleHelper.selectRecord();
         Contact contact = contacts.get(record - 1);
 
-        String field = consoleHelper.selectField();
+        if (contact.isPerson) {
+            editPersonContact((PersonContact) contact);
+        } else {
+            editOrganizationContact((OrganizationContact) contact);
+        }
+    }
+
+    public void editPersonContact(PersonContact contact) {
+        String field = consoleHelper.selectPersonContactField();
         switch (field) {
             case "name":
                 contact.setName(consoleHelper.readName());
                 break;
             case "surname":
                 contact.setSurname(consoleHelper.readSurname());
+                break;
+            case "birth":
+                contact.setBirthDate(consoleHelper.readBirthDate());
+                break;
+            case "gender":
+                contact.setGender(consoleHelper.readGender());
                 break;
             case "number":
                 contact.setNumber(consoleHelper.readNumber());
@@ -54,7 +88,26 @@ public class PhoneBook {
                 consoleHelper.showMessage("Invalid input!");
                 return;
         }
-        consoleHelper.showMessage("The record updated!");
+        consoleHelper.showMessage("The record updated!\n");
+    }
+
+    private void editOrganizationContact(OrganizationContact contact) {
+        String field = consoleHelper.selectOrganizationContactField();
+        switch (field) {
+            case "name":
+                contact.setName(consoleHelper.readOrganizationName());
+                break;
+            case "address":
+                contact.setAddress(consoleHelper.readAddress());
+                break;
+            case "number":
+                contact.setNumber(consoleHelper.readNumber());
+                break;
+            default:
+                consoleHelper.showMessage("Invalid input!");
+                return;
+        }
+        consoleHelper.showMessage("The record updated!\n");
     }
 
     public void count() {
@@ -66,5 +119,23 @@ public class PhoneBook {
         for (Contact contact : contacts) {
             consoleHelper.showMessage(String.format("%d. %s", ++counter, contact));
         }
+    }
+
+    public void info() {
+        list();
+
+        String strIndex = consoleHelper.readInfoIndex();
+        if (strIndex == null || !strIndex.matches("\\d+")) {
+            consoleHelper.showMessage("Invalid input!");
+            return;
+        }
+        int index = Integer.parseInt(strIndex) - 1;
+        if (index < 0 || index >= contacts.size()) {
+            consoleHelper.showMessage("Invalid input!");
+            return;
+        }
+
+        Contact contact = contacts.get(index);
+        consoleHelper.showMessage(contact.info() + "\n");
     }
 }
