@@ -9,7 +9,6 @@ public abstract class Contact {
     protected String number = "";
     private final LocalDateTime created;
     protected LocalDateTime lastEdit;
-    protected boolean isPerson;
 
     protected final ConsoleHelper consoleHelper = ConsoleHelper.getInstance();
 
@@ -62,5 +61,18 @@ public abstract class Contact {
                 hasNumber() ? number : "[no number]",
                 formatter.format(created),
                 formatter.format(lastEdit));
+    }
+
+    public abstract String[] getEditableFields();
+
+    public abstract String getFieldDescription(String field);
+
+    public abstract boolean setFieldValue(String field, String value);
+
+    public String searchInfo() {
+        return String.join(" ",
+                number,
+                created.toString(),
+                lastEdit == null ? "" : lastEdit.toString());
     }
 }

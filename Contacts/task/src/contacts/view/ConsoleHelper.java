@@ -1,5 +1,8 @@
 package contacts.view;
 
+import contacts.model.Contact;
+
+import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleHelper {
@@ -14,8 +17,12 @@ public class ConsoleHelper {
 
     private final Scanner scanner = new Scanner(System.in);
 
+    public void close() {
+        scanner.close();
+    }
+
     public String menu() {
-        System.out.print("Enter action (add, remove, edit, count, info, exit): ");
+        System.out.print("[menu] Enter action (add, list, search, count, exit): ");
         return scanner.nextLine();
     }
 
@@ -23,37 +30,23 @@ public class ConsoleHelper {
         System.out.println(msg);
     }
 
-    public void close() {
-        scanner.close();
+    public void showMessageInvalidInput() {
+        System.out.println("Invalid input!");
+    }
+
+    public void skipLine() {
+        System.out.println();
+    }
+
+    public void showlist(List<Contact> contacts) {
+        int counter = 0;
+        for (Contact contact : contacts) {
+            System.out.println(String.format("%d. %s", ++counter, contact));
+        }
     }
 
     public String readContactType() {
         System.out.print("Enter the type (person, organization): ");
-        return scanner.nextLine();
-    }
-
-    public String readName() {
-        System.out.print("Enter the name: ");
-        return scanner.nextLine();
-    }
-
-    public String readSurname() {
-        System.out.print("Enter the surname: ");
-        return scanner.nextLine();
-    }
-
-    public String readBirthDate() {
-        System.out.print("Enter the birth date: ");
-        return scanner.nextLine();
-    }
-
-    public String readGender() {
-        System.out.print("Enter the gender (M, F): ");
-        return scanner.nextLine();
-    }
-
-    public String readNumber() {
-        System.out.print("Enter the number: ");
         return scanner.nextLine();
     }
 
@@ -63,28 +56,38 @@ public class ConsoleHelper {
         return Integer.parseInt(record);
     }
 
-    public String selectPersonContactField() {
-        System.out.print("Select a field (name, surname, birth, gender, number): ");
-        return scanner.nextLine();
-    }
-
-    public String readOrganizationName() {
-        System.out.print("Enter the organization name: ");
-        return scanner.nextLine();
-    }
-
-    public String readAddress() {
-        System.out.print("Enter the address: ");
-        return scanner.nextLine();
-    }
-
     public String readInfoIndex() {
         System.out.print("Enter index to show info: ");
         return scanner.nextLine();
     }
 
-    public String selectOrganizationContactField() {
-        System.out.print("Select a field (name, address, number): ");
+    public String selectContactField(String fields) {
+        System.out.printf("Select a field (%s): ", fields);
+        return scanner.nextLine();
+    }
+
+    public String readField(String field) {
+        System.out.printf("Enter %s: ", field);
+        return scanner.nextLine();
+    }
+
+    public String readSearchQuery() {
+        System.out.print("Enter search query: ");
+        return scanner.nextLine();
+    }
+
+    public String searchMenu() {
+        System.out.print("\n[search] Enter action ([number], back, again): ");
+        return scanner.nextLine();
+    }
+
+    public String recordMenu() {
+        System.out.print("[record] Enter action (edit, delete, menu): ");
+        return scanner.nextLine();
+    }
+
+    public String listdMenu() {
+        System.out.print("\n[list] Enter action ([number], back): ");
         return scanner.nextLine();
     }
 }

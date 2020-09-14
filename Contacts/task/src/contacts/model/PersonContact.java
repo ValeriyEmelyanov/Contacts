@@ -2,12 +2,15 @@ package contacts.model;
 
 import contacts.view.ConsoleHelper;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class PersonContact extends Contact {
-    private String name;
-    private String surname;
+public class PersonContact extends Contact implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    private String name = "";
+    private String surname = "";
     private LocalDate birthDate;
     private String gender = "";
 
@@ -17,7 +20,6 @@ public class PersonContact extends Contact {
         this.surname = surname;
         this.birthDate = birthDate;
         this.gender = gender;
-        this.isPerson = true;
     }
 
     public String getName() {
@@ -25,7 +27,7 @@ public class PersonContact extends Contact {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name == null ? "" : name;
         this.lastEdit = LocalDateTime.now();
     }
 
@@ -34,7 +36,7 @@ public class PersonContact extends Contact {
     }
 
     public void setSurname(String surname) {
-        this.surname = surname;
+        this.surname = surname == null ? "" : surname;
         this.lastEdit = LocalDateTime.now();
     }
 
@@ -71,7 +73,7 @@ public class PersonContact extends Contact {
     }
 
     private static boolean isGenderValid(String gender, ConsoleHelper consoleHelper) {
-        if (gender == null || gender.isEmpty() || !gender.matches("[MF]")) {
+        if (!gender.matches("[MFmf]")) {
             consoleHelper.showMessage("Bad gender!");
             return false;
         }
@@ -96,6 +98,56 @@ public class PersonContact extends Contact {
     }
 
     @Override
+    public String[] getEditableFields() {
+        return new String[] {"name", "surname", "birth", "gender", "number"};
+    }
+
+    @Override
+    public String getFieldDescription(String field) {
+        if (field.equals("gender")) {
+            return "gender (M, F)";
+        } else if (field.equals("birth")) {
+            return "birth date";
+        }
+        return field;
+    }
+
+    @Override
+    public boolean setFieldValue(String field, String value) {
+        switch (field) {
+            case "name":
+                setName(value);
+                break;
+            case "surname":
+                setSurname(value);
+                break;
+            case "birth":
+                setBirthDate(value);
+                break;
+            case "gender":
+                setGender(value);
+                break;
+            case "number":
+                setNumber(value);
+                break;
+            default:
+                consoleHelper.showMessage("Invalid field name!");
+                return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String searchInfo() {
+        return String.join(" ",
+                super.searchInfo(),
+                name,
+                surname,
+                birthDate == null ? "" : birthDate.toString(),
+                gender);
+    }
+
+    @Override
     public String toString() {
         return name + " " + surname;
     }
@@ -104,7 +156,7 @@ public class PersonContact extends Contact {
         return new Builder();
     }
 
-    static class Builder {
+    public static class Builder {
         private String number = "";
         private String name;
         private String surname;
@@ -144,5 +196,6 @@ public class PersonContact extends Contact {
         public PersonContact build() {
             return new PersonContact(number, name, surname, birthDate, gender);
         }
+
     }
 }

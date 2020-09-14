@@ -5,7 +5,11 @@ import contacts.view.ConsoleHelper;
 
 public class Controller {
     private final ConsoleHelper consoleHelper = ConsoleHelper.getInstance();
-    private final PhoneBook phoneBook = new PhoneBook();
+    private final PhoneBook phoneBook;
+
+    public Controller(String fileName) {
+        phoneBook = new PhoneBook(fileName);
+    }
 
     public void run() {
         while (true) {
@@ -14,23 +18,21 @@ public class Controller {
                 case "add":
                     phoneBook.add();
                     break;
-                case "remove":
-                    phoneBook.remove();
+                case "list":
+                    phoneBook.list();
                     break;
-                case "edit":
-                    phoneBook.edit();
+                case "search":
+                    phoneBook.search();
                     break;
                 case "count":
                     phoneBook.count();
-                    break;
-                case "info":
-                    phoneBook.info();
                     break;
                 case "exit":
                     consoleHelper.close();
                     return;
                 default:
-                    consoleHelper.showMessage("Invalid input!");
+                    consoleHelper.showMessageInvalidInput();
+                    consoleHelper.skipLine();
             }
         }
     }

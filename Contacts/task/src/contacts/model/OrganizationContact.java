@@ -2,17 +2,19 @@ package contacts.model;
 
 import contacts.view.ConsoleHelper;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class OrganizationContact extends Contact {
-    private String name;
-    private String address;
+public class OrganizationContact extends Contact implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    private String name = "";
+    private String address = "";
 
     private OrganizationContact(String number, String name, String address) {
         this.number = number;
         this.name = name;
         this.address = address;
-        this.isPerson = false;
     }
 
     public String getName() {
@@ -20,7 +22,7 @@ public class OrganizationContact extends Contact {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name == null ? "" : name;
         this.lastEdit = LocalDateTime.now();
     }
 
@@ -29,7 +31,7 @@ public class OrganizationContact extends Contact {
     }
 
     public void setAddress(String address) {
-        this.address = address;
+        this.address = address == null ? "" : address;
         this.lastEdit = LocalDateTime.now();
     }
 
@@ -43,6 +45,43 @@ public class OrganizationContact extends Contact {
     }
 
     @Override
+    public String[] getEditableFields() {
+        return new String[] {"name", "address", "number"};
+    }
+
+    @Override
+    public String searchInfo() {
+        return String.join(" ", super.searchInfo(), name, address);
+    }
+
+    @Override
+    public String getFieldDescription(String field) {
+        //if (field.equals("name")) {
+        //    return "organization name";
+        //}
+        return field;
+    }
+
+    @Override
+    public boolean setFieldValue(String field, String value) {
+        switch (field) {
+            case "name":
+                setName(value);
+                break;
+            case "address":
+                setAddress(value);
+                break;
+            case "number":
+                setNumber(value);
+                break;
+            default:
+                consoleHelper.showMessage("Invalid field name!");
+                return false;
+        }
+        return true;
+    }
+
+    @Override
     public String toString() {
         return name;
     }
@@ -51,7 +90,7 @@ public class OrganizationContact extends Contact {
         return new Builder();
     }
 
-    static class Builder {
+    public static class Builder {
         private String number = "";
         private String name;
         private String address;
