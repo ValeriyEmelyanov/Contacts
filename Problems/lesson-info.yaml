@@ -40,3 +40,6 @@ content:
 - In a box
 - The first day of a month or not
 - A lambda expression with seven arguments
+- Remove extra spaces
+- Remove HTML tags
+- Remove comments
