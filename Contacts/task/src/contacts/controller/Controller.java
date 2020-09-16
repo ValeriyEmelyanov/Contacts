@@ -7,13 +7,12 @@ import contacts.view.ConsoleHelper;
 
 public class Controller {
     private final ConsoleHelper consoleHelper = ConsoleHelper.getInstance();
-    private final PhoneBook phoneBook;
     private final Stack<Menu> stack;
 
     private boolean exit = false;
 
     public Controller(String fileName) {
-        phoneBook = new PhoneBook(fileName);
+        PhoneBook phoneBook = new PhoneBook(fileName);
 
         stack = new Stack<>();
         stack.push(new MainMenu(phoneBook, this));

@@ -15,9 +15,11 @@ import java.util.Map;
 
 public class MainMenu implements Menu {
     private final ConsoleHelper consoleHelper = ConsoleHelper.getInstance();
+    private final String prompt;
     private final Map<String, Command> actions;
 
     public MainMenu(PhoneBook phoneBook, Controller controller) {
+        prompt = "[menu] Enter action (add, list, search, count, exit): ";
         actions = new HashMap<>();
         actions.put("add", new AddContactCommand(phoneBook));
         actions.put("list", new ListContactsCommand(phoneBook));
@@ -28,7 +30,6 @@ public class MainMenu implements Menu {
 
     @Override
     public Command next() {
-        final String prompt = "[menu] Enter action (add, list, search, count, exit): ";
         Command command = actions.get(consoleHelper.menu(prompt));
         if (command == null) {
             return InvalidInputCommand.getInstance();
