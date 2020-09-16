@@ -1,39 +1,33 @@
 package contacts.controller;
 
+import contacts.controller.commands.Command;
 import contacts.model.PhoneBook;
+import contacts.utils.Stack;
 import contacts.view.ConsoleHelper;
 
 public class Controller {
     private final ConsoleHelper consoleHelper = ConsoleHelper.getInstance();
     private final PhoneBook phoneBook;
+    private final Stack<Menu> stack;
+
+    private boolean exit = false;
 
     public Controller(String fileName) {
         phoneBook = new PhoneBook(fileName);
+
+        stack = new Stack<>();
+        stack.push(new MainMenu(phoneBook, this));
     }
 
     public void run() {
-        while (true) {
-            String choice = consoleHelper.menu();
-            switch (choice) {
-                case "add":
-                    phoneBook.add();
-                    break;
-                case "list":
-                    phoneBook.list();
-                    break;
-                case "search":
-                    phoneBook.search();
-                    break;
-                case "count":
-                    phoneBook.count();
-                    break;
-                case "exit":
-                    consoleHelper.close();
-                    return;
-                default:
-                    consoleHelper.showMessageInvalidInput();
-                    consoleHelper.skipLine();
-            }
+        while (!exit) {
+            Menu menu = stack.peek();
+            Command command = menu.next();
+            command.execute();
         }
+    }
+
+    public void setExit(boolean exit) {
+        this.exit = exit;
     }
 }

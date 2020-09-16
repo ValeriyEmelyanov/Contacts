@@ -21,8 +21,8 @@ public class ConsoleHelper {
         scanner.close();
     }
 
-    public String menu() {
-        System.out.print("[menu] Enter action (add, list, search, count, exit): ");
+    public String menu(String prompt) {
+        System.out.print(prompt);
         return scanner.nextLine();
     }
 
