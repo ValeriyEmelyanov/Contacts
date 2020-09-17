@@ -17,6 +17,10 @@ public class ListContactsCommand implements Command {
 
     @Override
     public void execute() {
+        if (phoneBook.getContacts().isEmpty()) {
+            consoleHelper.showMessage("No records!\n");
+            return;
+        }
         consoleHelper.showlist(phoneBook.getContacts());
         controller.pushMenu(controller.getListMenu());
     }

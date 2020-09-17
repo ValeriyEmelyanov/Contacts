@@ -26,7 +26,8 @@ public class ContactFactory {
                         .setNumber(consoleHelper.readField("number"))
                         .build();
             default:
-                consoleHelper.showMessage("Invalid input!");
+                consoleHelper.showMessageInvalidInput();
+                consoleHelper.skipLine();
                 return null;
         }
     }
