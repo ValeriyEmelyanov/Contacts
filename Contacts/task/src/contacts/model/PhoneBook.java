@@ -11,10 +11,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PhoneBook {
+    private final ConsoleHelper consoleHelper = ConsoleHelper.getInstance();
     private final List<Contact> contacts;
     private final String fileName;
-
-    private final ConsoleHelper consoleHelper = ConsoleHelper.getInstance();
 
     public PhoneBook(String fileName) {
         this.fileName = fileName;
@@ -24,6 +23,10 @@ public class PhoneBook {
             contacts = SerialisationUtils.deserialize(fileName);
             consoleHelper.showMessage("open " + fileName + "\n");
         }
+    }
+
+    public List<Contact> getContacts() {
+        return contacts;
     }
 
     public void add() {
@@ -38,13 +41,13 @@ public class PhoneBook {
         consoleHelper.showMessage("The record added.\n");
     }
 
-    private void removeContact(Contact contact) {
+    public void removeContact(Contact contact) {
         contacts.remove(contact);
         serialize();
         consoleHelper.showMessage("The record removed!\n");
     }
 
-    private void editContact(Contact contact) {
+    public void editContact(Contact contact) {
         String[] fields = contact.getEditableFields();
         String field = consoleHelper.selectContactField(String.join(", ", fields));
         if (Arrays.stream(fields).noneMatch(e -> e.equals(field))) {
@@ -61,31 +64,6 @@ public class PhoneBook {
 
     public void count() {
         consoleHelper.showMessage(String.format("The Phone Book has %d records.\n", contacts.size()));
-    }
-
-    public void list() {
-        consoleHelper.showlist(contacts);
-
-        String action = consoleHelper.listdMenu();
-        if (action.equals("back")) {
-            consoleHelper.skipLine();
-            return;
-        }
-
-        if (!action.matches("\\d+")) {
-            consoleHelper.showMessageInvalidInput();
-            return;
-        }
-
-        int resordNo = Integer.parseInt(action);
-        if (resordNo > contacts.size()) {
-            consoleHelper.showMessageInvalidInput();
-            return;
-        }
-
-        Contact contact = contacts.get(resordNo - 1);
-        consoleHelper.showMessage(contact.info() + "\n");
-        record(contact);
     }
 
     public void search() {
@@ -140,7 +118,7 @@ public class PhoneBook {
 
     private void record(Contact contact) {
         while (true) {
-            String action = consoleHelper.recordMenu();
+            String action = consoleHelper.menu("[record] Enter action (edit, delete, menu): ");
             switch (action) {
                 case "edit":
                     editContact(contact);

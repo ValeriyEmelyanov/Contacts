@@ -81,13 +81,4 @@ public class ConsoleHelper {
         return scanner.nextLine();
     }
 
-    public String recordMenu() {
-        System.out.print("[record] Enter action (edit, delete, menu): ");
-        return scanner.nextLine();
-    }
-
-    public String listdMenu() {
-        System.out.print("\n[list] Enter action ([number], back): ");
-        return scanner.nextLine();
-    }
 }

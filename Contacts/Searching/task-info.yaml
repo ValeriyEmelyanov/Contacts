@@ -218,12 +218,6 @@ files:
 - name: src/contacts/utils/Stack.java
   visible: true
   learner_created: true
-- name: src/contacts/controller/MainMenu.java
-  visible: true
-  learner_created: true
-- name: src/contacts/controller/Menu.java
-  visible: true
-  learner_created: true
 - name: src/contacts/controller/commands/Command.java
   visible: true
   learner_created: true
@@ -243,6 +237,33 @@ files:
   visible: true
   learner_created: true
 - name: src/contacts/controller/commands/InvalidInputCommand.java
+  visible: true
+  learner_created: true
+- name: src/contacts/controller/menu/MainMenu.java
+  visible: true
+  learner_created: true
+- name: src/contacts/controller/menu/Menu.java
+  visible: true
+  learner_created: true
+- name: src/contacts/controller/menu/ListMenu.java
+  visible: true
+  learner_created: true
+- name: src/contacts/controller/commands/listmenu/ListBackCommand.java
+  visible: true
+  learner_created: true
+- name: src/contacts/controller/commands/listmenu/ContactInfoCommand.java
+  visible: true
+  learner_created: true
+- name: src/contacts/controller/menu/RecordMenu.java
+  visible: true
+  learner_created: true
+- name: src/contacts/controller/commands/recordmenu/EditContactCommand.java
+  visible: true
+  learner_created: true
+- name: src/contacts/controller/commands/recordmenu/DeleteContactCommand.java
+  visible: true
+  learner_created: true
+- name: src/contacts/controller/commands/recordmenu/RecordToMainMenuCommand.java
   visible: true
   learner_created: true
 feedback_link: https://hyperskill.org/projects/43/stages/231/implement
