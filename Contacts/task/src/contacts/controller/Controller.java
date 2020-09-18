@@ -18,6 +18,9 @@ public class Controller {
 
     public Controller(String fileName) {
         phoneBook = new PhoneBook(fileName);
+        if (!phoneBook.isFileNameEmpty()) {
+            consoleHelper.showMessage("open " + fileName + "\n");
+        }
 
         menuStack = new Stack<>();
         menuStack.push(new MainMenu(phoneBook, this));

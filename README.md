@@ -11,5 +11,6 @@ Write a program to create contacts and search for people or organizations by nam
 
 * Console application
 * Serialization
+* Patterns: MVC, Command, Static Factory, Singleton
 * Regex
 

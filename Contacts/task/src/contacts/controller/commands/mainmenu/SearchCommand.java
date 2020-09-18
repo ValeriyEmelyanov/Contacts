@@ -21,7 +21,8 @@ public class SearchCommand implements Command {
 
     @Override
     public void execute() {
-        List<Contact> searchResult = phoneBook.searchContacts();
+        String query = consoleHelper.readSearchQuery();
+        List<Contact> searchResult = phoneBook.searchContacts(query);
 
         consoleHelper.showMessage(String.format("Found %d results:", searchResult.size()));
         consoleHelper.showlist(searchResult);
