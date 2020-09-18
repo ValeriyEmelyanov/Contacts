@@ -69,10 +69,5 @@ public abstract class Contact {
 
     public abstract boolean setFieldValue(String field, String value);
 
-    public String searchInfo() {
-        return String.join(" ",
-                number,
-                created.toString(),
-                lastEdit == null ? "" : lastEdit.toString());
-    }
+    public abstract String searchInfo();
 }

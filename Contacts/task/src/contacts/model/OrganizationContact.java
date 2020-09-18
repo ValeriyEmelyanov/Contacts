@@ -51,14 +51,14 @@ public class OrganizationContact extends Contact implements Serializable {
 
     @Override
     public String searchInfo() {
-        return String.join(" ", super.searchInfo(), name, address);
+        return name;
     }
 
     @Override
     public String getFieldDescription(String field) {
-        //if (field.equals("name")) {
-        //    return "organization name";
-        //}
+        if (field.equals("name")) {
+            return "organization name";
+        }
         return field;
     }
 

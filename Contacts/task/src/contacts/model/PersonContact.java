@@ -139,17 +139,12 @@ public class PersonContact extends Contact implements Serializable {
 
     @Override
     public String searchInfo() {
-        return String.join(" ",
-                super.searchInfo(),
-                name,
-                surname,
-                birthDate == null ? "" : birthDate.toString(),
-                gender);
+        return String.join(" ", name, surname);
     }
 
     @Override
     public String toString() {
-        return name + " " + surname;
+        return String.join(" ", name, surname);
     }
 
     public static Builder builder() {
