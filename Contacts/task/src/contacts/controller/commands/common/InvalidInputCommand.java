@@ -1,5 +1,6 @@
-package contacts.controller.commands;
+package contacts.controller.commands.common;
 
+import contacts.controller.commands.Command;
 import contacts.view.ConsoleHelper;
 
 public class InvalidInputCommand implements Command {

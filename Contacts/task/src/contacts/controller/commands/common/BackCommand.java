@@ -1,14 +1,14 @@
-package contacts.controller.commands.listmenu;
+package contacts.controller.commands.common;
 
 import contacts.controller.Controller;
 import contacts.controller.commands.Command;
 import contacts.view.ConsoleHelper;
 
-public class ListBackCommand implements Command {
+public class BackCommand implements Command {
     private final ConsoleHelper consoleHelper = ConsoleHelper.getInstance();
     private final Controller controller;
 
-    public ListBackCommand(Controller controller) {
+    public BackCommand(Controller controller) {
         this.controller = controller;
     }
 

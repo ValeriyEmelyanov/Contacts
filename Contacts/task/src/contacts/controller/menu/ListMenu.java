@@ -2,8 +2,8 @@ package contacts.controller.menu;
 
 import contacts.controller.Controller;
 import contacts.controller.commands.Command;
+import contacts.controller.commands.common.BackCommand;
 import contacts.controller.commands.listmenu.ContactInfoCommand;
-import contacts.controller.commands.listmenu.ListBackCommand;
 import contacts.model.Contact;
 import contacts.model.PhoneBook;
 import contacts.view.ConsoleHelper;
@@ -19,7 +19,7 @@ public class ListMenu implements Menu {
         this.phoneBook = phoneBook;
         this.controller = controller;
         this.prompt = "\n[list] Enter action ([number], back): ";
-        this.backCommand = new ListBackCommand(controller);
+        this.backCommand = new BackCommand(controller);
     }
 
     @Override

@@ -62,47 +62,7 @@ public class PhoneBook {
         }
     }
 
-    public void count() {
-        consoleHelper.showMessage(String.format("The Phone Book has %d records.\n", contacts.size()));
-    }
-
-    public void search() {
-        do {
-            List<Contact> result = searchContacts();
-
-            consoleHelper.showMessage(String.format("Found %d results:", result.size()));
-            consoleHelper.showlist(result);
-
-            String action = consoleHelper.searchMenu();
-            switch (action) {
-                case "again":
-                    continue;
-                case "back":
-                    consoleHelper.showMessage("");
-                    return;
-                default:
-                    if (!action.matches("\\d+")) {
-                        consoleHelper.showMessageInvalidInput();
-                        consoleHelper.skipLine();
-                        continue;
-                    }
-                    int recordNo = Integer.parseInt(action);
-                    if (recordNo > result.size()) {
-                        consoleHelper.showMessageInvalidInput();
-                        consoleHelper.skipLine();
-                        continue;
-                    }
-
-                    Contact contact = result.get(recordNo - 1);
-                    consoleHelper.showMessage(contact.info() + "\n");
-
-                    record(contact);
-                    return;
-            }
-        } while (true);
-    }
-
-    private List<Contact> searchContacts() {
+    public List<Contact> searchContacts() {
         String query = consoleHelper.readSearchQuery();
 
         Pattern pattern = Pattern.compile(query, Pattern.CASE_INSENSITIVE);
@@ -114,25 +74,6 @@ public class PhoneBook {
             }
         }
         return result;
-    }
-
-    private void record(Contact contact) {
-        while (true) {
-            String action = consoleHelper.menu("[record] Enter action (edit, delete, menu): ");
-            switch (action) {
-                case "edit":
-                    editContact(contact);
-                    break;
-                case "delete":
-                    removeContact(contact);
-                    return;
-                case "menu":
-                    consoleHelper.skipLine();
-                    return;
-                default:
-                    consoleHelper.showMessageInvalidInput();
-            }
-        }
     }
 
     private boolean isFileNameEmpty() {

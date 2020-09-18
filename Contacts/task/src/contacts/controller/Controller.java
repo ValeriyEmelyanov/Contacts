@@ -29,6 +29,7 @@ public class Controller {
             Command command = menu.next();
             command.execute();
         }
+        consoleHelper.close();
     }
 
     public Menu getListMenu() {

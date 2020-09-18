@@ -2,8 +2,7 @@ package contacts.controller.menu;
 
 import contacts.controller.Controller;
 import contacts.controller.commands.Command;
-import contacts.controller.commands.InvalidInputCommand;
-import contacts.controller.commands.mainmenu.AddContactCommand;
+import contacts.controller.commands.common.InvalidInputCommand;
 import contacts.controller.commands.recordmenu.DeleteContactCommand;
 import contacts.controller.commands.recordmenu.EditContactCommand;
 import contacts.controller.commands.recordmenu.RecordToMainMenuCommand;
@@ -23,7 +22,7 @@ public class RecordMenu implements Menu {
         this.prompt = "[record] Enter action (edit, delete, menu): ";
         this.actions = new HashMap<>();
         this.actions.put("edit", new EditContactCommand(phoneBook, controller, contact));
-        this.actions.put("delete", new DeleteContactCommand(phoneBook,controller, contact));
+        this.actions.put("delete", new DeleteContactCommand(phoneBook, controller, contact));
         this.actions.put("menu", new RecordToMainMenuCommand(controller));
     }
 

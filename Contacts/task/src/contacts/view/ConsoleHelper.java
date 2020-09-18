@@ -50,17 +50,6 @@ public class ConsoleHelper {
         return scanner.nextLine();
     }
 
-    public int selectRecord() {
-        System.out.print("Select a record: ");
-        String record = scanner.nextLine();
-        return Integer.parseInt(record);
-    }
-
-    public String readInfoIndex() {
-        System.out.print("Enter index to show info: ");
-        return scanner.nextLine();
-    }
-
     public String selectContactField(String fields) {
         System.out.printf("Select a field (%s): ", fields);
         return scanner.nextLine();
@@ -73,11 +62,6 @@ public class ConsoleHelper {
 
     public String readSearchQuery() {
         System.out.print("Enter search query: ");
-        return scanner.nextLine();
-    }
-
-    public String searchMenu() {
-        System.out.print("\n[search] Enter action ([number], back, again): ");
         return scanner.nextLine();
     }
 
